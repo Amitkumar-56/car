@@ -1,0 +1,45 @@
+CREATE DATABASE IF NOT EXISTS `cars_assessment` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `cars_assessment`;
+
+CREATE TABLE IF NOT EXISTS `site_settings` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `k` VARCHAR(100) UNIQUE,
+  `v` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `banners` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(200),
+  `image` VARCHAR(255),
+  `active` TINYINT DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `cars` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(200),
+  `image` VARCHAR(255),
+  `type` ENUM('most_searched','latest'),
+  `active` TINYINT DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `submissions` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100),
+  `phone` VARCHAR(20),
+  `email` VARCHAR(100),
+  `address` TEXT,
+  `options` VARCHAR(100),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `site_settings` (`k`,`v`) VALUES ('site_title','Car Portal')
+ON DUPLICATE KEY UPDATE `v`=VALUES(`v`);
+ 
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(150) UNIQUE,
+  `password_hash` VARCHAR(255),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
